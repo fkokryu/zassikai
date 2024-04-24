@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>hfpr.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="some-models-to-manage-additive-consistency-and-derive-priority-weights-from-hesitant-fuzzy-preference-relations">Some models to manage additive consistency and derive priority weights from hesitant fuzzy preference relations</h1>
+<p>Yejun Xu, Weijia Dai, Jing Huang, Mengqi Li, Enrique Herrera-Viedma<br>
+Information Sciences 586 (2022) 450–467</p>
+<hr>
+<h2 id="1-introduction">1. Introduction</h2>
+<h3 id="%E3%83%95%E3%82%A1%E3%82%B8%E3%82%A3%E9%9B%86%E5%90%88%E3%83%95%E3%82%A1%E3%82%B8%E3%82%A3%E9%81%B8%E5%A5%BD%E9%96%A2%E4%BF%82">ファジィ集合、ファジィ選好関係</h3>
+<p>ファジィ集合は意思決定者（DMs）が自分の好みについて確信が持てない場合や情報が不完全な場合に広く使用される</p>
+<ul>
+<li>
+<p>Orlovsky</p>
+<ul>
+<li>ファジィ選好関係（FPRs）の定義を提案<br>
+しかし、ファジィ集合には意思決定者が判断情報の明確な値を提供することに躊躇する問題を扱う上での限界がある。</li>
+</ul>
+</li>
+<li>
+<p>Torra</p>
+<ul>
+<li>躊躇ファジィ集合（HFS）という概念を定義<br>
+HFSはペアワイズ比較行列の要素に0から1の間の複数のメンバーシップ度を適用。さらに、HFSは躊躇ファジィ言語集合に拡張された。</li>
+</ul>
+</li>
+<li>
+<p>XiaとXu</p>
+<ul>
+<li>HFSを基に、躊躇ファジィ選好関係（HFPRs）を提案<br>
+そして、整合性分析、優先度重要度の導出、不完全HFPRなどHFPRに関する一連の調査</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="%E6%95%B4%E5%90%88%E6%80%A7%E3%81%AE%E7%A0%94%E7%A9%B6">整合性の研究</h3>
+<ul>
+<li>
+<p>Tanino</p>
+<ul>
+<li>FPRの整合性</li>
+</ul>
+</li>
+<li>
+<p>WangとXu</p>
+<ul>
+<li>hesitant fuzzy linguistic preference relations (躊躇ファジィ言語選好関係)の概念を定義</li>
+<li>加算整合性<br>
+以下を満たすとき、LPR $ R= (r_{ij})<em>{n \times n} $ は加算整合性を持つ
+$$
+r</em>{ij} = r_{ik} + r_{kj}, \forall i, j, k = 1, 2, \dots
+$$</li>
+<li>弱整合性<br>
+以下を満たすとき、LPR $ R= (r_{ij})<em>{n \times n} $ は弱整合性を持つ<br>
+$$
+r</em>{ik} \geq 0.5 \text{ and } r_{kj} \geq 0.5 ならば
+r_{ij} \geq 0.5 , \forall i, j, k = 1, 2, ..., n, i \neq j \neq k
+$$</li>
+</ul>
+</li>
+<li>
+<p>Xuら</p>
+<ul>
+<li>不完全HFPRに対する加算整合性の概念を提案</li>
+</ul>
+</li>
+<li>
+<p>Liuら</p>
+<ul>
+<li>HFPRのための新しい整合性とコンセンサスの枠組みを開発</li>
+</ul>
+</li>
+<li>
+<p>Zhuら</p>
+<ul>
+<li>Hesitant Multiplicative Programming Model</li>
+</ul>
+</li>
+<li>
+<p>MengとAn</p>
+<ul>
+<li>HFPRの乗法的整合性の検証</li>
+</ul>
+</li>
+<li>
+<p>LiとWang</p>
+<ul>
+<li>平均整合性に基づくHFPRの新しい加法的整合性の概念を開発<br>
+すべての可能な組(i,j,k) に対する整合性の評価を平均化し、その平均値を用いてHFPRの整合性を判断。これにより、全体としての整合性が個々の不一致によって過度に影響を受けない</li>
+</ul>
+</li>
+<li>
+<p>Rodríguezら</p>
+<ul>
+<li>整合性の種類とその意味合い</li>
+<li>加算整合性 (Additive Consistency)<br>
+Linguistic Preference Relation $ R = (r_{ij})_{n \times n} $ は全ての $ i, j, k $ に対して以下の等式が成立する場合、加算整合性を有します。</li>
+</ul>
+<p>$$
+r_{ij} = r_{ik} + r_{kj}, \quad \forall i, j, k = 1, 2, \dots, n
+$$</p>
+<ul>
+<li>乗算整合性 (Multiplicative Consistency)<br>
+Multiplicative Preference Relation $ R = (r_{ij})_{n \times n} $ は全ての $ i, j, k $ に対して以下の等式が成立する場合、乗算整合性を有します。</li>
+</ul>
+<p>$$
+r_{ij} = r_{ik} \times r_{kj}, \quad \forall i, j, k = 1, 2, \dots, n
+$$</p>
+<ul>
+<li>弱整合性 (Weak Consistency)<br>
+Weak Consistency in a Preference Relation $ R = (r_{ij})_{n \times n} $ は全ての $ i, j, k $ に対して以下の不等式が成立する場合、弱整合性を有します。</li>
+</ul>
+<p>$$
+r_{ik} \geq 0.5 \text{ and } r_{kj} \geq 0.5 \implies r_{ij} \geq 0.5, \quad \forall i, j, k = 1, 2, \dots, n
+$$</p>
+<ul>
+<li>最適整合性 (Optimal Consistency)<br>
+最適整合性は具体的な数式で定義するのが難しい場合が多いが、通常は整合性の最大化を目指す最適化問題として表されます。Optimal Consistency in a Preference Relation $ R = (r_{ij})_{n \times n} $ は、複数の整合性評価法を組み合わせて最も高い整合性スコアを得る設定が求められます。一般的な形式は次のようになります。</li>
+</ul>
+<p>$$
+\text{Maximize } C(R) \text{ subject to various consistency constraints}
+$$</p>
+<p>ここで$C(R)$は整合性の計算式で、具体的な形式は使用する整合性指標に依存します。</p>
+</li>
+</ul>
+<hr>
+<h3 id="%E6%97%A2%E5%AD%98%E7%A0%94%E7%A9%B6%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">既存研究の問題点</h3>
+<ul>
+<li>Zhangらによる正規化プロセス：<br>
+Zhangらは加算整合性を有するHFPRの定義を提案、この方法ではHFPRを正規化する必要があるがDMの元の判断を歪めるリスクあり。また異なる正規化方法によって、複数の正規化されたHFPR（NHFPR）が生成される可能性。</li>
+<li>Zhuらによる乗法的整合性の研究：<br>
+Zhuらは楽観的整合性指標を用いてHFPRの乗法整合性を評価したが、この方法では元のHFEに追加の値を入れるb正規化が用いられている。これもDMの元の選好情報を歪める可能性がある。さらに、この手法ではHFPRを最も整合性が高いFPRに変換してしまい、DMの躊躇を適切に反映できない。</li>
+<li>ZhuとXuの研究：<br>
+この手法では、HFPRの整合性が弱い場合や低い場合を無視する傾向にある。これにより、元のHFPRの整合性情報を包括的に反映することができない</li>
+<li>Liらによる区間整合性指標：<br>
+Liらの研究では、区間整合性指標が用いられたが、この指標が意思決定プロセスにおける不確実性を増大させたと報告。</li>
+</ul>
+<hr>
+<h3 id="%E3%81%93%E3%81%AE%E8%AB%96%E6%96%87%E3%81%A7%E3%81%AF">この論文では</h3>
+<ol>
+<li>
+<p><strong>完全加算整合性と弱加算整合性の導入：</strong></p>
+<ul>
+<li>HFPRsの整合性を評価するために、完全加算整合性（CAC）と弱加算整合性（WAC）という新しい概念を提案。これらの整合性を測定するために、複数の線形プログラミングモデル</li>
+</ul>
+</li>
+<li>
+<p><strong>整合性修正方法の開発：</strong></p>
+<ul>
+<li>HFPRが加算的に一貫していない場合、整合性を修正するための方法を開発。この方法により、不一致の判断を修正し、加算的に一貫した新しいHFPRを構築。この新しいHFPRは元のHFPRとの間で偏差が最小限に抑える。</li>
+</ul>
+</li>
+<li>
+<p><strong>優先度重要度の算出：</strong></p>
+<ul>
+<li>整合性のあるHFPRから優先度重要度を求めるために、いくつかの線形プログラミングモデルを設計。これらのモデルでは、正のパラメータ $h$ (h &gt; 1) を導入し、異なる$h$の値によって異なる優先度重要度ベクトルを導出しつつ、ランキング結果が変わらないようにする。さらに、整合性の管理、優先度重要度の取得、および整合性のあるHFPRsの選択肢のランキングを一般化する統合アルゴリズムの提案。</li>
+</ul>
+</li>
+</ol>
+<h3 id="%E6%97%A2%E5%AD%98%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E6%8F%90%E6%A1%88%E6%A6%82%E5%BF%B5%E3%81%A8%E6%89%8B%E6%B3%95%E3%81%AE%E6%96%B0%E8%A6%8F%E6%80%A7%E3%81%A8%E5%88%A9%E7%82%B9">既存モデルと比較した場合の提案概念と手法の新規性と利点</h3>
+<ol>
+<li>
+<p><strong>CACとWACの概念：</strong></p>
+<ul>
+<li>完全加算整合性（CAC）と弱加算整合性（WAC）は、表面的な整合性情報だけでなく、潜在的な整合性情報もHFPRs内に含まれている。これにより、元のHFPRの整合性情報を最大限に反映することができる。</li>
+</ul>
+</li>
+<li>
+<p><strong>整合性の検証方法：</strong></p>
+<ul>
+<li>提案された整合性検証方法は、HFS（Hesitant Fuzzy Sets）に新たな値を加えたり取り除いたりすることなく、意思決定者（DM）の以前の優先情報を歪めることなく、すべての判断情報を考慮に入れるる。0-1混合プログラミングモデルを用いて実現。</li>
+</ul>
+</li>
+<li>
+<p><strong>整合性のない情報の修正プロセス：</strong></p>
+<ul>
+<li>加算的に一貫した新しいHFPRを構築する際、できるだけ元の情報を保持し、整合性のない情報を修正する。</li>
+</ul>
+</li>
+<li>
+<p><strong>優先度重要度の導出方法：</strong></p>
+<ul>
+<li>優先度の重要度は、提案された線形プログラミングモデルを使用して、複雑な計算を行うことなく得ることができる。この方法により、整合性のあるHFPRから効率的に優先度重要度を導出することが可能。</li>
+</ul>
+</li>
+<li>
+<p><strong>整合性メソッドの適用可能性：</strong></p>
+<ul>
+<li>提案された整合性メソッドは、不完全なHFPRsにおける整合性のタイプを検証するためにも応用できる。これにより、整合性が部分的にしか確認できない場合でも、整合性の評価が行える。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="2-preliminaries">2. Preliminaries</h2>
+<h3 id="fuzzy-preferrence-relationsfprs">Fuzzy Preferrence Relations(FPRs)</h3>
+<h4 id="%E5%AE%9A%E7%BE%A91">定義1</h4>
+<p>Fuzzy Preference Relations（FPRs）は通常、$ n \times n $サイズの行列$ R = (r_{ij}) $によって表され、各要素は以下の条件を満たします：</p>
+<p>$$
+r_{ij} + r_{ji} = 1, \quad r_{ii} = 0.5, \quad \forall i, j
+$$</p>
+<ul>
+<li>$ r_{ij} = 0 $は選択肢$ j $が選択肢$ i $に完全に優先されることを示す。</li>
+<li>$ r_{ij} = 0.5 $は選択肢$ i $と選択肢$ j $の間に差がないことを示す。</li>
+<li>$ r_{ij} = 1 $は選択肢$ i $が選択肢$ j $に完全に優先されることを示す。</li>
+<li>$ 0 &lt; r_{ij} &lt; 0.5 $は選択肢$ j $が選択肢$ i $より明確に優先されることを示す。</li>
+</ul>
+<p>以下は加法整合性に関する定義とその理論的議論、リマーク、数値例を含む詳細な説明です：</p>
+<h4 id="%E5%8A%A0%E6%B3%95%E6%95%B4%E5%90%88%E6%80%A7%E3%81%AE%E5%AE%9A%E7%BE%A9">加法整合性の定義</h4>
+<p>Fuzzy Preference Relation（FPR）$ R = (r_{ij})<em>{n \times n} $ が加法整合性を持つとは、すべての $i, j, k$ に対して以下の条件を満たすこと:
+$$
+r</em>{ij} = r_{ik} - r_{jk} + 0.5
+$$</p>
+<h4 id="%E9%87%8D%E8%A6%81%E5%BA%A6">重要度</h4>
+<p><strong>重要度ベクトル</strong>:
+FPRが加法的に一貫している場合、非負の要素からなる優先度の重要度ベクトル $ W = (w_1, w_2, ..., w_n)^T $ が存在し、全ての重要度の合計が1になる：
+$$
+w_i \geq 0, \quad \sum_{i=1}^n w_i = 1, \quad i \in N
+$$</p>
+<p><strong>重要度とFPRの関係</strong>:
+重要度 $ w_i $ と優先度 $ r_{ij} $ の間の関係は、対数関数を用いて次のように表現できます：
+$$
+w_i(\theta) = \frac{\theta^{1/n \sum_{k=1}^n r_{ik}}}{\sum_{j=1}^n \theta^{1/n \sum_{k=1}^n r_{jk}}}, \quad r_{ij} = \log_{\theta}w_i - \log_{\theta}w_j + 0.5, \quad \forall i, j \in N
+$$
+ここで、$ \theta &gt; 1 $ です。$ \theta $ がネイピア数 $ e $ に近づくと、重要度関数は次のように単純化されます：
+$$
+w_i(e) = \frac{e^{1/n \sum_{k=1}^n r_{ik}}}{\sum_{j=1}^n e^{1/n \sum_{k=1}^n r_{jk}}}, \quad i \in N
+$$</p>
+<p><strong>パラメータ $ \theta $ の影響</strong>:
+任意のパラメータ $ \theta &gt; 1 $ に対して、優先度の重要度 $ w_i(\theta) $ は次を満たします：
+$$
+w_i(\theta) = \frac{(w_i(e))^t}{\sum_{j=1}^n (w_i(e))^t}, \quad t = \ln\theta, \quad \forall i, j \in N
+$$
+この式は、パラメータ $ \theta $ が重要度の分布を調整できることを反映しており、任意の正の $ \theta $ に対して、$ w_i(\theta) $ は単に $ w_i(e) $ の $ e $ を底とする累乗変換。</p>
+<h4 id="%E5%82%99%E8%80%831">備考1</h4>
+<p>特定の $ \theta $ の値に関係なく同じランキング順序を維持する。</p>
+<h4 id="%E6%95%B0%E5%80%A4%E4%BE%8B">数値例</h4>
+<p>以下のようなFPR行列 $ R $ を考えます:
+$$
+R = \begin{bmatrix}
+0.5 &amp; 0.8 &amp; 0.7 \
+0.2 &amp; 0.5 &amp; 0.4 \
+0.3 &amp; 0.6 &amp; 0.5 \
+\end{bmatrix}
+$$
+重要度 $ w_1, w_2, w_3 $ が $ h $ とともに変動することが示されます。これらの変動にもかかわらず、ランキング順序 $ w_1 &gt; w_3 &gt; w_2 $ は、$ h $ が1から10,000に増加するにつれて一貫している。</p>
+<h4 id="%E5%AE%9A%E7%BE%A93">定義3</h4>
+<p>意思決定者により与えられた$ R = (r_{ij})<em>{n \times n} $に抜けがあっても、与えられているすべての要素で以下が成り立てば加法整合性を持つ
+$$
+r</em>{ij} = r_{ik} - r_{jk} + 0.5
+$$</p>
+<hr>
+<h3 id="hesitant-fuzzy-setshfs">Hesitant Fuzzy Sets（HFS）</h3>
+<p>DMの判断情報のためらいと不確実性を説明するために、TorraはHFSを定義</p>
+<p><strong>定義4</strong> 有限集合X上のHFSは、[0, 1]内の非空の有限値部分集合を返す関数h(x)によって記述できます。HFSは次のように定義されます：
+$$
+E = {(x, h(x)) &gt; x \in X}
+$$
+ここでh(x)はXの要素xがHFS Eに属する可能性のあるメンバーシップ度を示し、h(x)は躊躇ファジー要素（HFE）と呼ばれます。</p>
+<p><strong>定義5</strong> h(x)がHFEである場合、その上限と下限は以下のように示されます：
+$$
+h^+(x) = \max h(x)
+$$
+$$
+h^-(x) = \min h(x)
+$$</p>
+<hr>
+<h3 id="hesitant-fuzzy-preference-relationshfpr">Hesitant Fuzzy Preference Relations（HFPR）</h3>
+<p>FPRとHFSに基づいて、XiaとXuがHFPRを提案。
+しかし、その定義ではHFSの値が昇順であることが必要で、DMの元の優先情報が歪められてしまうことがあり、これらの欠点を克服するために、XuらはHFPRの改訂された定義を提案しました。</p>
+<h4 id="%E5%AE%9A%E7%BE%A96">定義6.</h4>
+<p>集合X上のHFPRは、行列 $ H = (h_{ij})<em>{n \times n} \subseteq X \times X $ によって表され、ここで $ h</em>{ij} = { h_{ij}^l } | l = 1, 2, ..., #h_{ij} $（#h_{ij} は $ h_{ij} $ の要素数）はHFEです。$ h_{ij} $ は選択肢 $ x_i $ が $ x_j $ を上回る全ての可能な優先度を示し、$ h_{ij} $ は次の条件を満たす必要があります：</p>
+<p>$$
+h_{ij}^l + h_{ji}^{(#h_{ij}-l+1)} = 1, l = 1, 2, ..., #h_{ij}
+$$
+$$
+h_{ii} = {0.5}, i \in N
+$$
+$$
+#h_{ij} = #h_{ji}, \forall i, j \in N
+$$</p>
+<p>ここで $ h_{ij}^l $ は $ h_{ij} $ の $ l $ 番目の要素です。</p>
+<h4 id="%E5%AE%9A%E7%BE%A97">定義7.</h4>
+<p>$ H = (h_{ij})<em>{n \times n} $ をHFPRとし、$ h</em>{ij} = { h_{ij}^l | l = 1, 2, ..., #h_{ij} } $ の場合、一部の要素がDMによって提供されない場合、それらは記号 &quot;-&quot; で示され、他の要素はDMによって満たされるべきであり、$ H $ は不完全なHFPRと呼ばれます：</p>
+<p>$$
+h_{ij}^l + h_{ji}^{(#h_{ij}-l+1)} = 1,
+$$
+$$
+h_{ii} = {0.5},
+$$
+$$
+#h_{</p>
+<p>ij} = #h_{ji},
+$$</p>
+<p>ここで $ h_{ij}^l $ は $ h_{ij} $ の $ l $ 番目の要素で、すべての $ h_{ij} $ ∈ EVに対して、ここでEVは $ H $ における全ての既知のHFEの集合です。</p>
+<hr>
+<h2 id="3-some-methods-of-consistency-test-inconsistency-modification-and-weights-derivation-for-hfprs">3. Some methods of consistency test, inconsistency modification and weights derivation for HFPRs</h2>
+<h3 id="31-two-types-of-additive-consistency-of-hfprs">3.1. Two types of additive consistency of HFPRs</h3>
+<p>CACとWACはともに、元のHFPRから加法整合性を満たすFPRを導出できる。<br>
+CAC：加法的整合性FPRのすべての値がHFPRのHFEから導かれる<br>
+WAC：加法的整合性FPRのすべての値がHFPRのHFEの下界と上界の間の範囲にある</p>
+<hr>
+<h4 id="%E5%AE%9A%E7%BE%A98">定義8.</h4>
+<p>HFPR $ H = (h_{ij})<em>{n \times n}, h</em>{ij} = { h_{ij}^l } <em>{l = 1,2,...,#h</em>{ij}} $があり、次の条件を満たす FPR $ R = (r_{ij})_{n \times n} $ が存在する場合、完全加法整合性のあるHFPRと呼ばれます:</p>
+<p>$ r_{ij} = r_{ik} - r_{jk} + 0.5, r_{ij} \in h_{ij}, \forall i,j,k \in N  $</p>
+<hr>
+<p>意思決定者にとって最適ではないが、ある程度合理的である選好を示す可能性もある。そこで、WAC（弱加法整合性）を定義する。</p>
+<h4 id="%E5%AE%9A%E7%BE%A99">定義9.</h4>
+<p>HFPR $ H = (h_{ij})<em>{n \times n}, h</em>{ij} = { h_{ij}^l } <em>{l = 1,2,...,#h</em>{ij}} $ に対して、$ H $内の加法整合性のある FPR $ R = (r_{ij})_{n \times n} $ が存在し、次の条件を満たす場合、弱い加法整合性のあるHFPRと呼ばれます:</p>
+<p>$ r_{ij} = r_{ik} - r_{jk} + 0.5, h_{ij}^- \leq r_{ij} \leq h_{ij}^+, \forall i,j,k \in N  $</p>
+<p>ここで、$ h_{ij}^- $ と $ h_{ij}^+ $ はHFE $ h_{ij} $ の下限と上限です。</p>
+<hr>
+<p>定理1に触発されて、弱い加法整合性のあるHFPRの等価な定義は以下のとおりです:</p>
+<h4 id="%E5%AE%9A%E7%BE%A910">定義10.</h4>
+<p>HFPR $ H = (h_{ij})<em>{n \times n}, h</em>{ij} = { h_{ij}^l } <em>{l = 1,2,...,#h</em>{ij}} $であり、正規化された重みベクトル $ W = (w_1, w_2, ..., w_n)^T $, $ \sum_{i=1}^n w_i = 1 $, $ w_i \geq 0 $, $ i \in N $ およびパラメータ $ \theta &gt; 1 $が存在する場合、弱い加法整合性のあるHFPRと呼ばれます。そこで、</p>
+<p>$ h_{ij}^- \leq \log_{\theta} w_i - log_{\theta} w_j + 0.5 \leq h_{ij}^+, \forall i,j \in N $</p>
+<hr>
+<p>HFPRの対称性に従って、HFPRのためのWACの等価な定義を得ることができます。</p>
+<h4 id="%E5%AE%9A%E7%BE%A911">定義11.</h4>
+<p>HFPR $ H = (h_{ij})<em>{n \times n}, h</em>{ij} = { h_{ij}^l } <em>{l = 1,2,...,#h</em>{ij}} $が、正規化された重みベクトル $ W = (w_1, w_2, ..., w_n)^T $, $ \sum_{i=1}^n w_i = 1 $, $ w_i &gt; 0 $, $ i \in N $ およびパラメータ $ \theta &gt; 1 $が存在し、次の条件を満たす場合、弱い加法整合性のあるHFPRと呼ばれます:</p>
+<p>$ h_{ij}^- \leq log_{\theta} w_i - log_{\theta} w_j + 0.5 \leq h_{ij}^+ ,i = 1,2,...,n - 1, j = i + 1,...,n $</p>
+<hr>
+<h4 id="%E5%82%99%E8%80%832">備考2.</h4>
+<p>定義8より、与えられたHFPRには可視的な加法的整合的FPRが存在し、これはDMが提供する選好がある程度合理的であることを示す。よって、HFPRから合理整合性のある情報を抽出することができる。定義9は、HFPRにおける暗黙整合性判断を考慮し、DMの元情報から論理的情報を導出しようとするものである。定義8と9から、HFPRがCACであればWACでなければならないが、その逆ではないことは明らかである。</p>
+<hr>
+<h4 id="%E5%82%99%E8%80%833">備考3.</h4>
+<p>HFPRは、完全加法的整合HFPR、弱加法的整合HFPR、加法的無矛盾HFPRの3種類に分けられる。CACはWACの特殊なケースであると結論づけられる。すなわち、あるHFPRが完全に加法的整合的である場合、それは弱加法的整合的でなければならず、その逆はありえない。</p>
+<hr>
+<h3 id="32-consistency-test-for-hfprs">3.2. Consistency test for HFPRs</h3>
+
+</body>
+</html>
